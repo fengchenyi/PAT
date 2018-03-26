@@ -1,26 +1,58 @@
 #include<iostream>
-#include<string>
-//典型的滑块思想 
+#include<string>	
 using namespace std;
-int main (){
+int main() {
 	string have;
-	int count=0;
-	int p=0,a=0,t=0;
-	cin>>have; 
-	for(int i=0;i<have.size();i++){
-		if(have[i]=='T')
-			t++;
-	}	
-	for(int i=0;i<have.size();i++){
-		if(have[i]=='P')
-			p++;
-		if(have[i]=='T')
-			t--;
-		if(have[i]=='A')
-			count +=p*t;
-		if(count>=1000000007)
-			count=count%1000000007;	
+	long long int count = 0;
+	int Pcount = 0;
+	int Acount = 0;
+	int Tcount = 0;
+	cin >> have;
+	int i = 0;
+	int j = 0;
+	int t = 0;
+	int a = 0;
+	int m = 0;
+	for (int t = i; t<have.size() - 1; t++) {
+		Pcount = 0;
+		a = 0;
+		if (have[t] != 'P')
+			continue;
+		for (i=t; i<have.size() - 2; i++) {
+			if (have[i] == 'P') {
+				Pcount++;
+				a++;
+			}
+			else {
+				break;
+			}
+		}
+		int n = i;
+			for (j = n; j < have.size() - 1; j++) {
+				if (have[j] == 'A') {
+					Acount++;
+					n++;
+				}
+				else {
+					if (Acount != 0) {
+						for (m = j; m < have.size(); m++) {
+							if (have[m] == 'T')
+								Tcount++;
+						}
+						if (count >= 1000000007) {
+							count -= 1000000007;
+							count += Pcount*Acount*Tcount;
+						}
+						else
+							count += Pcount*Acount*Tcount;
+						Acount = 0;
+						Tcount = 0;
+					}
+			}
+		}
+			t += a;
 	}
-	cout<<count<<endl;
+	cout << count << endl;
+
 	return 0;
 }

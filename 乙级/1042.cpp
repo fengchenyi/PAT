@@ -15,13 +15,10 @@ int  main() {
 		}
 	}
 	int max = 0;
-	char end;
 	for (int i = 'a'; i <= 'z'; i++) {
-		if (hash[i]>max){
+		if (hash[i]>max)
 			max = hash[i];
-			end=char(i);
-		}
 	}
-	printf("%c %d\n",end, max);
+	printf("%c %d", hash[max],max );
 	return 0;
 }

@@ -1,36 +1,78 @@
 #include<iostream>
-#include<cstdlib>
+#include<string>
 #include<cstdio>
-#include<vector>
-#include<functional>
-#include<algorithm>
+#include<cstdlib>
 using namespace std;
-int main (){
-	int count;
-	cin>>count;
-	int *num=new int[count];
-	int *temp=new int [count];
-	vector<int> end;
-	int max=num[0];
-	for(int i=0;i<count;i++){
-		scanf("%d",&num[i]);
-		temp[i]=num[i];
+string lowmarnum[13] = { "tret","jan","feb","mar","apr","may","jun","jly","aug","sep","oct","nov","dec" };
+string highmarnum[13] = { "tret","tam", "hel", "maa", "huh", "tou", "kes", "hei", "elo", "syy", "lok", "mer", "jou" };
+void numtomar(string have) {
+	int num = atoi(have.c_str());
+	if (num >= 13) {
+		int carry = num / 13;
+		int remain = num - carry * 13;
+		cout << highmarnum[carry - 1] << " ";
+		cout << lowmarnum[remain] << endl;
 	}
-	sort(num,num+count);
-	for(int i=0;i<count;i++){
-		if(max<temp[i])
-			max=temp[i];
-		if(temp[i]==num[i]&&max==temp[i])
-			end.push_back(temp[i]);
+	else {
+		cout << lowmarnum[num] << endl;
 	}
-	cout<<end.size()<<endl;
-	for(int i=0;i<end.size();i++){
-		cout<<end[i];
-		if(i!=end.size()-1)
-			cout<<" ";
+}
+void martonum(string have) {
+	if (have.size()>3) {
+		string high;
+		for (int i = 0; i<4; i++) {
+			if (i != 3)
+				high.push_back(have[i]);
+		}
+		have.erase(0, 4);
+		int num = 0;
+		for (int j = 0; j < 12; j++) {
+			if (high == highmarnum[j]) {
+				num += (j  * 13);
+				break;
+			}
+		}
+		for (int t = 0; t<12; t++) {
+			if (have == lowmarnum[t]) {
+				num += t;
+				break;
+			}
+		}
+		cout << num << endl;
 	}
-	cout<<endl;
-	delete []num;
-	delete []temp;
+	else {
+		int i = 0;
+		int sign = 0;
+		for (; i<12; i++) {
+			if (lowmarnum[i] == have) {
+				sign = 1;
+				break;
+			}
+		}
+		if(sign==1)
+			cout << i << endl;
+		else {
+			for (i=0; i<12; i++) {
+				if (highmarnum[i] == have) {
+					break;
+				}
+			}
+			cout << 13 * i << endl;
+		}
+	}
+}
+int main() {
+	int count = 0;
+	cin >> count;
+	getchar();
+	string have;
+	while (count--) {
+		getline(cin, have);
+
+		if (have[0] >= '0'&&have[0] <= '9')
+			numtomar(have);
+		else
+			martonum(have);
+	}
 	return 0;
 }

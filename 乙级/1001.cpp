@@ -1,4 +1,4 @@
-include<iostream>
+#include<iostream>
 using namespace std;
 int isodd(int num){
   return num%2;
